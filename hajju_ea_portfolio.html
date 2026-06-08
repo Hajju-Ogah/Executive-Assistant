@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --gold:#B8975A;--gold-light:#E8D5A3;--gold-pale:#F7F2E8;
+  --dark:#1A1714;--mid:#3D3830;--soft:#7A7060;--mute:#C4B89A;
+  --white:#FDFBF7;--surface:#F5F0E8;--border:#DDD5C0;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--dark);color:var(--white);min-height:100vh;overflow-x:hidden}
+
+.nav{position:sticky;top:0;z-index:100;background:rgba(26,23,20,0.95);backdrop-filter:blur(8px);border-bottom:0.5px solid rgba(184,151,90,0.3);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:56px}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:500;letter-spacing:0.12em;color:var(--gold);text-transform:uppercase}
+.nav-links{display:flex;gap:2rem}
+.nav-links a{font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--mute);cursor:pointer;text-decoration:none;transition:color 0.2s}
+.nav-links a:hover{color:var(--gold)}
+
+.hero{min-height:90vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:4rem 2rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(184,151,90,0.08) 0%,transparent 70%)}
+.hero-tag{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);border:0.5px solid rgba(184,151,90,0.4);padding:6px 16px;border-radius:20px;margin-bottom:2rem;display:inline-block}
+.hero-name{font-family:'Cormorant Garamond',serif;font-size:clamp(56px,8vw,96px);font-weight:300;letter-spacing:-0.02em;line-height:0.95;color:var(--white);margin-bottom:1.5rem}
+.hero-name span{color:var(--gold);font-style:italic}
+.hero-title{font-size:14px;letter-spacing:0.15em;text-transform:uppercase;color:var(--soft);margin-bottom:2.5rem;font-weight:300}
+.hero-desc{max-width:520px;font-size:16px;line-height:1.8;color:var(--mute);font-weight:300;margin-bottom:3rem}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
+.btn-primary{background:var(--gold);color:var(--dark);padding:12px 28px;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity 0.2s}
+.btn-primary:hover{opacity:0.85}
+.btn-secondary{background:transparent;color:var(--gold);padding:12px 28px;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;font-weight:400;border:0.5px solid rgba(184,151,90,0.5);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
+.btn-secondary:hover{border-color:var(--gold);background:rgba(184,151,90,0.05)}
+
+.section{padding:5rem 2rem;max-width:960px;margin:0 auto}
+.section-label{font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,52px);font-weight:400;line-height:1.1;color:var(--white);margin-bottom:3rem}
+.section-title em{font-style:italic;color:var(--gold)}
+.divider{width:40px;height:1px;background:var(--gold);margin:1.5rem 0 3rem}
+
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1px;background:rgba(184,151,90,0.2);border:0.5px solid rgba(184,151,90,0.2);margin-bottom:4rem}
+.stat{background:var(--dark);padding:2rem 1.5rem;text-align:center}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--gold);line-height:1}
+.stat-label{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--soft);margin-top:0.5rem}
+
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:rgba(184,151,90,0.15)}
+.skill-card{background:var(--dark);padding:2rem;position:relative;overflow:hidden;transition:background 0.3s}
+.skill-card:hover{background:rgba(184,151,90,0.04)}
+.skill-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0}
+.skill-card:hover::before{opacity:1}
+.skill-icon{font-size:28px;margin-bottom:1.25rem;opacity:0.8}
+.skill-name{font-size:13px;letter-spacing:0.1em;text-transform:uppercase;color:var(--white);font-weight:500;margin-bottom:0.75rem}
+.skill-desc{font-size:13px;line-height:1.7;color:var(--soft);font-weight:300}
+.skill-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:1rem}
+.skill-tag{font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);border:0.5px solid rgba(184,151,90,0.35);padding:3px 8px}
+
+.excel-section{background:rgba(184,151,90,0.04);border:0.5px solid rgba(184,151,90,0.2);padding:3rem;margin:4rem 0}
+.excel-header{display:flex;align-items:center;gap:1rem;margin-bottom:2rem}
+.excel-badge{background:var(--gold);color:var(--dark);font-size:10px;letter-spacing:0.15em;text-transform:uppercase;padding:4px 12px;font-weight:500}
+.excel-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem;margin-top:2rem}
+.excel-item{border-left:2px solid rgba(184,151,90,0.4);padding-left:1rem}
+.excel-item-title{font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold-light);font-weight:500;margin-bottom:0.4rem}
+.excel-item-desc{font-size:13px;line-height:1.6;color:var(--soft);font-weight:300}
+
+.exp-item{display:grid;grid-template-columns:1fr 3fr;gap:3rem;padding:2.5rem 0;border-bottom:0.5px solid rgba(184,151,90,0.15)}
+.exp-item:last-child{border-bottom:none}
+.exp-meta{padding-top:4px}
+.exp-period{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem}
+.exp-company{font-size:13px;color:var(--soft);font-weight:300}
+.exp-role{font-size:16px;color:var(--white);font-weight:400;margin-bottom:1rem}
+.exp-points{list-style:none;display:flex;flex-direction:column;gap:0.5rem}
+.exp-points li{font-size:13px;line-height:1.7;color:var(--soft);padding-left:1rem;position:relative;font-weight:300}
+.exp-points li::before{content:'—';position:absolute;left:0;color:var(--gold);font-size:10px;top:3px}
+
+.tools-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:2rem}
+.tool-pill{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--mute);border:0.5px solid rgba(184,151,90,0.25);padding:6px 14px;transition:all 0.2s}
+.tool-pill:hover{border-color:var(--gold);color:var(--gold)}
+
+.contact-section{background:var(--mid);border-top:0.5px solid rgba(184,151,90,0.3)}
+.contact-inner{max-width:960px;margin:0 auto;padding:4rem 2rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.contact-title{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:300;color:var(--white);line-height:1.2;margin-bottom:1rem}
+.contact-title em{font-style:italic;color:var(--gold)}
+.contact-sub{font-size:14px;line-height:1.8;color:var(--soft);font-weight:300}
+.contact-details{display:flex;flex-direction:column;gap:1rem}
+.contact-row{display:flex;align-items:center;gap:1rem;padding:1rem;border:0.5px solid rgba(184,151,90,0.2)}
+.contact-row-icon{width:36px;height:36px;border:0.5px solid rgba(184,151,90,0.4);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--gold);flex-shrink:0}
+.contact-row-text{font-size:13px;color:var(--mute)}
+.contact-row-label{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--soft);margin-bottom:2px}
+
+.footer{background:var(--dark);border-top:0.5px solid rgba(184,151,90,0.15);padding:1.5rem 2rem;text-align:center}
+.footer-text{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--soft)}
+
+@media(max-width:640px){
+  .exp-item{grid-template-columns:1fr}
+  .contact-inner{grid-template-columns:1fr;gap:2rem}
+  .nav-links{gap:1rem}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-logo">H · Ogah</div>
+  <div class="nav-links">
+    <a onclick="document.getElementById('skills').scrollIntoView({behavior:'smooth'})">Skills</a>
+    <a onclick="document.getElementById('excel').scrollIntoView({behavior:'smooth'})">Excel</a>
+    <a onclick="document.getElementById('experience').scrollIntoView({behavior:'smooth'})">Experience</a>
+    <a onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contact</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-tag">Operations & Executive Virtual Assistant · CPT-11029</div>
+  <h1 class="hero-name">Hajju<br><span>Ogah</span></h1>
+  <p class="hero-title">Executive Assistant · C-Suite Support · Operations & Data</p>
+  <p class="hero-desc">Highly organised remote EA with 3+ years supporting C-suite executives. I don't wait for instructions — I anticipate, act, and deliver.</p>
+  <div class="hero-btns">
+    <button class="btn-primary" onclick="document.getElementById('skills').scrollIntoView({behavior:'smooth'})">View my skills</button>
+    <button class="btn-secondary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get in touch</button>
+  </div>
+</section>
+
+<div style="max-width:960px;margin:0 auto;padding:0 2rem">
+  <div class="stats-row">
+    <div class="stat"><div class="stat-num">3+</div><div class="stat-label">Years EA experience</div></div>
+    <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Remote-ready</div></div>
+    <div class="stat"><div class="stat-num">3</div><div class="stat-label">Time zones covered</div></div>
+    <div class="stat"><div class="stat-num">5+</div><div class="stat-label">Tools mastered</div></div>
+  </div>
+</div>
+
+<section class="section" id="skills">
+  <p class="section-label">What I bring</p>
+  <h2 class="section-title">Core <em>capabilities</em></h2>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-icon">🗓</div>
+      <div class="skill-name">Executive Calendar Management</div>
+      <div class="skill-desc">Complex scheduling across multiple time zones. Conflict resolution, priority alignment, and protecting executive focus time.</div>
+      <div class="skill-tags"><span class="skill-tag">Google Calendar</span><span class="skill-tag">Time zones</span><span class="skill-tag">Scheduling</span></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">📬</div>
+      <div class="skill-name">Inbox Triage & Correspondence</div>
+      <div class="skill-desc">End-to-end inbox management — triaging messages, flagging priorities, and drafting polished executive communications.</div>
+      <div class="skill-tags"><span class="skill-tag">Gmail</span><span class="skill-tag">Drafting</span><span class="skill-tag">Prioritisation</span></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">✈️</div>
+      <div class="skill-name">Travel Coordination</div>
+      <div class="skill-desc">Full-cycle domestic and international travel — flights, accommodation, ground transport, itineraries, and contingency planning.</div>
+      <div class="skill-tags"><span class="skill-tag">International</span><span class="skill-tag">Logistics</span><span class="skill-tag">Itineraries</span></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">📋</div>
+      <div class="skill-name">Meeting Preparation & Follow-Up</div>
+      <div class="skill-desc">Compiling briefings, decks, and summaries so executives walk into every meeting fully prepared — and leave with clear next actions.</div>
+      <div class="skill-tags"><span class="skill-tag">Google Docs</span><span class="skill-tag">Slides</span><span class="skill-tag">Briefings</span></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🔒</div>
+      <div class="skill-name">Confidentiality & Discretion</div>
+      <div class="skill-desc">Handling sensitive information for C-suite leadership with strict professional discretion and sound judgment under pressure.</div>
+      <div class="skill-tags"><span class="skill-tag">Confidential data</span><span class="skill-tag">Trust</span></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">⚙️</div>
+      <div class="skill-name">Operations & Special Projects</div>
+      <div class="skill-desc">Event planning, offsite coordination, SOP documentation, and operational support that keeps the business moving smoothly.</div>
+      <div class="skill-tags"><span class="skill-tag">Event planning</span><span class="skill-tag">SOPs</span><span class="skill-tag">Coordination</span></div>
+    </div>
+  </div>
+</section>
+
+<div style="max-width:960px;margin:0 auto;padding:0 2rem" id="excel">
+  <div class="excel-section">
+    <div class="excel-header">
+      <div class="excel-badge">Excel & Data Skills</div>
+      <div style="height:1px;flex:1;background:rgba(184,151,90,0.3)"></div>
+    </div>
+    <p style="font-size:14px;line-height:1.8;color:var(--soft);max-width:560px;font-weight:300">Proficient in Microsoft Excel and Google Sheets for operational tracking, reporting, and data organisation — a direct asset for administrative and operations roles.</p>
+    <div class="excel-grid">
+      <div class="excel-item">
+        <div class="excel-item-title">Data Entry & Validation</div>
+        <div class="excel-item-desc">Accurate, high-volume data entry with built-in validation rules to prevent errors and maintain clean records.</div>
+      </div>
+      <div class="excel-item">
+        <div class="excel-item-title">Formulas & Functions</div>
+        <div class="excel-item-desc">VLOOKUP, SUMIF, COUNTIF, IF/nested IF, and basic data manipulation for operational reporting.</div>
+      </div>
+      <div class="excel-item">
+        <div class="excel-item-title">Pivot Tables & Dashboards</div>
+        <div class="excel-item-desc">Summarising large datasets into clear pivot tables and visual dashboards for leadership reporting.</div>
+      </div>
+      <div class="excel-item">
+        <div class="excel-item-title">Tracking & Reporting</div>
+        <div class="excel-item-desc">Building and maintaining trackers for tasks, deadlines, budgets, and project milestones across teams.</div>
+      </div>
+      <div class="excel-item">
+        <div class="excel-item-title">Formatting & Presentation</div>
+        <div class="excel-item-desc">Clean, professional formatting of spreadsheets for executive review, audits, and external reporting.</div>
+      </div>
+      <div class="excel-item">
+        <div class="excel-item-title">Google Sheets Integration</div>
+        <div class="excel-item-desc">Collaborative real-time tracking in Google Sheets, with shared access and comment-based workflows.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="section" id="experience">
+  <p class="section-label">Career history</p>
+  <h2 class="section-title">Where I've <em>worked</em></h2>
+  <div class="exp-item">
+    <div class="exp-meta">
+      <div class="exp-period">2023 – 2026</div>
+      <div class="exp-company">Shekinah Educational Services</div>
+    </div>
+    <div>
+      <div class="exp-role">Executive Assistant to the Founder & CEO</div>
+      <ul class="exp-points">
+        <li>Promoted from intern to EA within one year by demonstrating ownership and independently managing complex priorities</li>
+        <li>Structured and managed C-suite calendars across US, UK, and EU time zones, eliminating scheduling conflicts</li>
+        <li>Ran end-to-end inbox triage — flagging priorities, drafting replies, and ensuring zero messages fell through the cracks</li>
+        <li>Compiled meeting briefs, presentations, and research summaries so the CEO arrived fully prepared every time</li>
+        <li>Coordinated domestic and international travel including flights, hotels, ground transport, and contingency plans</li>
+        <li>Supported event planning, team offsites, and special operational projects as a trusted strategic gatekeeper</li>
+      </ul>
+    </div>
+  </div>
+  <div style="margin-top:3rem">
+    <p class="section-label">Tools I work with</p>
+    <div class="tools-row">
+      <span class="tool-pill">Google Workspace</span>
+      <span class="tool-pill">Gmail</span>
+      <span class="tool-pill">Google Calendar</span>
+      <span class="tool-pill">Google Drive</span>
+      <span class="tool-pill">Google Sheets</span>
+      <span class="tool-pill">Slack</span>
+      <span class="tool-pill">Microsoft Excel</span>
+      <span class="tool-pill">Microsoft Word</span>
+      <span class="tool-pill">Zoom</span>
+      <span class="tool-pill">Notion</span>
+      <span class="tool-pill">Trello</span>
+    </div>
+  </div>
+</section>
+
+<div id="contact" class="contact-section">
+  <div class="contact-inner">
+    <div>
+      <h2 class="contact-title">Let's work <em>together</em></h2>
+      <p class="contact-sub">Available 10–20 hours per week, Monday to Friday, 9 AM – 5 PM EST. Fully remote, reliable connection, dedicated workspace.</p>
+    </div>
+    <div class="contact-details">
+      <div class="contact-row">
+        <div class="contact-row-icon">📍</div>
+        <div>
+          <div class="contact-row-label">Location</div>
+          <div class="contact-row-text">Remote · UK-based</div>
+        </div>
+      </div>
+      <div class="contact-row">
+        <div class="contact-row-icon">🕘</div>
+        <div>
+          <div class="contact-row-label">Availability</div>
+          <div class="contact-row-text">Mon–Fri · 9 AM–5 PM EST</div>
+        </div>
+      </div>
+      <div class="contact-row">
+        <div class="contact-row-icon">💼</div>
+        <div>
+          <div class="contact-row-label">Current role</div>
+          <div class="contact-row-text">Operations & EA · 20four7VA</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <p class="footer-text">Hajju Ogah · Executive Assistant Portfolio · 2026</p>
+</footer>
+
+</body>
+</html>
